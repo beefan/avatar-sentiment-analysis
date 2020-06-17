@@ -98,6 +98,8 @@ export default {
             {
               label: plot.name,
               data: plot.y,
+              fill: 'false',
+              borderWidth: 2,
               backgroundColor: this.bgColors,
               borderColor: this.lineColors
             }
