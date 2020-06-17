@@ -3,8 +3,9 @@
     NavBar
     h2 {{ pageTitle }}
     ColorStrip(:chartdata="nrcEmotionData")
-    BarChart(:chartdata="emotionFreqData" :options="chartOptions")
-    LineChart(:chartdata="vaderScoreData" :options="chartOptions")
+    BarChart(:chartdata="emotionFreqData" :options="{scales: {xAxes: [ { ticks: { beginAtZero:true } } ]},responsive: true,maintainAspectRatio: false}")
+    LineChart(:chartdata="vaderScoreData" :options="{scales: {xAxes: [ { ticks: { beginAtZero:true } } ]},responsive: true,maintainAspectRatio: false}")
+    RadarChart(:chartdata="characterRadarData" :options="{title: {text: 'Character NRC Emotion Totals', display: true},responsive: true,maintainAspectRatio: false}")
 </template>
 
 <script>
@@ -27,7 +28,27 @@ export default {
   data() {
     return {
       episodeIndex: 0,
-      unfilteredChartData: require("@/assets/avatar-chart-data.json")
+      unfilteredChartData: require("@/assets/avatar-chart-data.json"),
+      bgColors: ['rgb(255, 173, 173, 0.5)', 
+                 'rgb(255, 214, 165, 0.5)', 
+                 'rgb(253, 255, 182, 0.5)', 
+                 'rgb(202, 255, 191, 0.5)', 
+                 'rgb(155, 246, 255, 0.5)', 
+                 'rgb(141, 153, 174, 0.5)',
+                 'rgb(237, 242, 244, 0.5)',
+                 'rgb(160, 196, 255, 0.5)', 
+                 'rgb(189, 178, 255, 0.5)', 
+                 'rgb(255, 198, 255, 0.5)'],
+      lineColors: ['rgb(255, 173, 173)', 
+                 'rgb(255, 214, 165)', 
+                 'rgb(253, 255, 182)', 
+                 'rgb(202, 255, 191)', 
+                 'rgb(155, 246, 255)', 
+                 'rgb(141, 153, 174)',
+                 'rgb(237, 242, 244)',
+                 'rgb(160, 196, 255)', 
+                 'rgb(189, 178, 255)', 
+                 'rgb(255, 198, 255)'],
     }
   },
   computed: {
@@ -77,20 +98,43 @@ export default {
             {
               label: plot.name,
               data: plot.y,
-              fill: 'false',
-              backgroundColor: ['#af0000', '#fe6600', '#8c3c00', '#003200', '#fef8aa', '#dddddd', '#00d5dc', '#282828', '#950083', '#0065fe']
+              backgroundColor: this.bgColors,
+              borderColor: this.lineColors
             }
           ],
         }
     },
-    chartOptions() {
-      return {
-        scales: {
-          xAxes: [ { ticks: { beginAtZero:true } } ]
-        },
-        responsive: true,
-        maintainAspectRatio: false
+    characterRadarData() {
+      const characterData = this.characterEmotionTotals;
+      let dataSets = [];
+
+      characterData.forEach( (plot, index) => {
+          dataSets.push(  {
+              label: plot.name.split(" ")[0],
+              data: plot.y,
+              backgroundColor: this.bgColors[index],
+              borderColor: this.lineColors[index]
+            } );
+      });
+
+      return  {
+          title: 'NRC Emotion Data',
+          labels: characterData[0].x,
+          datasets: dataSets,
+        }
+    },
+    characterEmotionTotals() {
+      // filter to get the character plots with NRC Emotion Totals in the title
+      const characterData = this.episode.plots.slice(3).filter( val => val.name.indexOf('NRC Emotion Totals') > 0);
+
+      // only get the top 5 characters
+      if (characterData.length > 5){
+        const sum = (arr) => arr.reduce( (acc, curr) => acc + curr);
+        characterData.sort( (a, b) => sum(a.y) < sum(b.y))
+        return characterData.slice(0, 5);
       }
+
+      return characterData;
     }
   }
 }
