@@ -2,7 +2,7 @@
 div#color-strip-wrapper
   p.chart-name {{ chartdata.name }}
   div#color-strip
-    div(v-for="(emotion,index) in chartdata.y" v-bind:key="index" :id="`strip${index}`" :style="{ backgroundColor: colorMap[emotion], width: width}")
+    div.strip(v-for="(emotion,index) in chartdata.y" v-bind:key="index" :id="`strip${index}`" :style="{ backgroundColor: colorMap[emotion], width: width}")
       b-tooltip(:target="`strip${index}`" triggers="hover") {{ emotion }}
 </template>
 
@@ -10,23 +10,12 @@ div#color-strip-wrapper
 export default {
   data() {
     return {
-      colorMap: {
-        anger: '#af0000',
-        anticipation: '#fe6600',
-        disgust: '#8c3c00',
-        fear: '#003200',
-        joy: '#fef8aa',
-        negative: '#dddddd',
-        positive: '#00d5dc',
-        sadness: '#282828',
-        surprise: '#950083',
-        trust: '#0065fe',
-        none: '#f8f8f8'
-      }
+      colorMap: {}
     }
   },
   props: {
-    chartdata: Object
+    chartdata: Object,
+    options: Array
   },
   computed: {
     width() {
@@ -35,6 +24,21 @@ export default {
     style(emotion) {
       return `backgroundColor: '${this.colorMap[emotion]}'`;
     }
+  },
+  created() {
+  this.colorMap = {
+        anger: this.options[0],
+        anticipation: this.options[1],
+        disgust: this.options[2],
+        fear: this.options[3],
+        joy: this.options[4],
+        negative: this.options[5],
+        positive: this.options[6],
+        sadness: this.options[7],
+        surprise: this.options[8],
+        trust: this.options[9],
+        none: "#fff"
+      }
   }
 }
 </script>
@@ -53,4 +57,6 @@ export default {
   color: #6c6c6c
 #color-strip-wrapper
   margin: 1%
+.strip:hover 
+  border: 1px solid grey
 </style>

@@ -2,7 +2,7 @@
   div
     NavBar
     h2 {{ pageTitle }}
-    ColorStrip(:chartdata="nrcEmotionData")
+    ColorStrip(:chartdata="nrcEmotionData" :options="bgColors")
     BarChart(:chartdata="emotionFreqData" :options="chartOptions.emotionFreq")
     LineChart(:chartdata="vaderScoreData" :options="chartOptions.vaderScores")
     RadarChart(:chartdata="characterRadarData" :options="chartOptions.charRadar")
