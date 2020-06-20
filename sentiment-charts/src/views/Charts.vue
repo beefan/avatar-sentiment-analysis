@@ -65,6 +65,17 @@ export default {
       }
     }
   },
+  methods: {
+    removeNeutrals(xData, yData) {
+      xData = xData.filter( (v, i) => { 
+        if (yData[i] !== 0) {
+          return true;
+        } 
+        });
+      yData = yData.filter( x => x != 0)
+      return {x: xData, y: yData}
+    }
+  },
   computed: {
     episode() {
       return this.unfilteredChartData.pages[this.episodeIndex];
@@ -87,15 +98,16 @@ export default {
     },
     vaderScoreData() {
       let plot = this.episode.plots[0];
+      let normalizedPlot = this.removeNeutrals(plot.x, plot.y)
       return  {
-          labels: plot.x,
+          labels: normalizedPlot.x,
           datasets: [
             {
               label: plot.name,
               borderColor: '#283646',
               borderWidth: 1,
               fill: false,
-              data: plot.y
+              data: normalizedPlot.y
             }
           ]
         }
@@ -128,8 +140,9 @@ export default {
           dataSets.push(  {
               label: plot.name.split(" ")[0],
               data: plot.y,
-              backgroundColor: this.bgColors[index],
-              borderColor: this.lineColors[index]
+              borderWidth: 1,
+              backgroundColor: this.bgColors[5-index],
+              borderColor: this.lineColors[5-index]
             } );
       });
 
@@ -142,11 +155,12 @@ export default {
     characterEmotionTotals() {
       // filter to get the character plots with NRC Emotion Totals in the title
       const characterData = this.episode.plots.slice(3).filter( val => val.name.indexOf('NRC Emotion Totals') > 0);
+      // sort characters by number of lines
+      const sum = (arr) => arr.reduce( (acc, curr) => acc + curr);
+      characterData.sort( (a, b) => sum(a.y) < sum(b.y))
 
-      // only get the top 5 characters
+      // only get the top 6 characters
       if (characterData.length > 5){
-        const sum = (arr) => arr.reduce( (acc, curr) => acc + curr);
-        characterData.sort( (a, b) => sum(a.y) < sum(b.y))
         return characterData.slice(0, 5);
       }
 
