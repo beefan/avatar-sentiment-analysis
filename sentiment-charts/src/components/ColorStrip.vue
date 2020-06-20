@@ -19,13 +19,14 @@ export default {
   },
   computed: {
     width() {
-      return `${Math.round(100 / (this.chartdata.y.length + 2))}%`;
+      return "1%"; //`${Math.round(100 / (this.chartdata.y.length + 2))}%`;
     },
     style(emotion) {
       return `backgroundColor: '${this.colorMap[emotion]}'`;
     }
   },
   created() {
+    console.log(this.chartdata)
   this.colorMap = {
         anger: this.options[0],
         anticipation: this.options[1],
