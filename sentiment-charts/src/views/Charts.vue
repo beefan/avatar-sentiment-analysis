@@ -87,11 +87,16 @@ export default {
       let book = this.episode.bookTitle.split(" ")[1];
       switch (book.substring(0, book.length - 1)) {
         case "One":
+          if (this.episodeIndex > 19) {
+            return this.episodeIndex - 1;
+          } else if (this.episodeIndex > 17) {
+            return this.episodeIndex;
+          }
           return this.episodeIndex + 1;
         case "Two":
-          return this.episodeIndex + 1;
+          return this.episodeIndex - 22;
         case "Three": 
-          return this.episodeIndex + 1;
+          return this.episodeIndex - 44;
         default:
           return ""; 
       }
