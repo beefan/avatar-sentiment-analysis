@@ -17,6 +17,9 @@ export default {
 #jumbo
   color: #f8f8f8
   margin: 10%
+  img
+    border-radius: 3px
+    max-width: 100%
 .btn
   margin: 5%
 </style>
