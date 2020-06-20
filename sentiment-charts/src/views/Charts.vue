@@ -3,9 +3,9 @@
     NavBar
     h2 {{ pageTitle }}
     ColorStrip(:chartdata="nrcEmotionData")
-    BarChart(:chartdata="emotionFreqData" :options="{scales: {xAxes: [ { ticks: { beginAtZero:true } } ]},responsive: true,maintainAspectRatio: false}")
-    LineChart(:chartdata="vaderScoreData" :options="{scales: {xAxes: [ { ticks: { beginAtZero:true } } ]},responsive: true,maintainAspectRatio: false}")
-    RadarChart(:chartdata="characterRadarData" :options="{title: {text: 'Character NRC Emotion Totals', display: true},responsive: true,maintainAspectRatio: false}")
+    BarChart(:chartdata="emotionFreqData" :options="chartOptions.emotionFreq")
+    LineChart(:chartdata="vaderScoreData" :options="chartOptions.vaderScores")
+    RadarChart(:chartdata="characterRadarData" :options="chartOptions.charRadar")
 </template>
 
 <script>
@@ -49,6 +49,20 @@ export default {
                  'rgb(160, 196, 255)', 
                  'rgb(189, 178, 255)', 
                  'rgb(255, 198, 255)'],
+      chartOptions: {
+        emotionFreq: { 
+          scales: { xAxes: [{ ticks: { beginAtZero:true } } ] },
+          responsive: true,
+          maintainAspectRatio: false },
+        vaderScores: { 
+          scales: { xAxes: [ { ticks: { beginAtZero:true } } ] },
+          responsive: true,
+          maintainAspectRatio: false },
+        charRadar: { 
+          title: { text: 'Character NRC Emotion Totals', display: true},
+          responsive: true,
+          maintainAspectRatio: false }
+      }
     }
   },
   computed: {
