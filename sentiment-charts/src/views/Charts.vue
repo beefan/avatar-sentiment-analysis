@@ -137,10 +137,8 @@ export default {
     },
     characterRadarData() {
       const characterData = this.characterEmotionTotals;
-      console.log(characterData)
-      console.log('^^^ character data')
       let dataSets = [];
-
+      if (characterData.length < 1) { return { title: 'NRC Emotion Data', labels: ['missing', 'data'], datasets: [{ label: 'none', data: ['missing', 'data'] }]} }
       characterData.forEach( (plot, index) => {
           dataSets.push(  {
               label: plot.name.split(" ")[0],
