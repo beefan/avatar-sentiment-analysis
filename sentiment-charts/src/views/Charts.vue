@@ -1,6 +1,7 @@
 <template lang="pug">
   div
     NavBar
+    EpisodePicker(:episodes="unfilteredChartData.pages"  v-on:update:episodeIndex="episodeIndex = $event")
     h2 {{ pageTitle }}
     ColorStrip(:chartdata="nrcEmotionData" :options="bgColors")
     BarChart(:chartdata="emotionFreqData" :options="chartOptions.emotionFreq")
@@ -15,6 +16,7 @@ import LineChart from "@/components/LineChart.vue"
 import PieChart from "@/components/PieChart.vue" 
 import RadarChart from "@/components/RadarChart.vue" 
 import ColorStrip from "@/components/ColorStrip.vue"
+import EpisodePicker from "@/components/EpisodePicker.vue"
 
 export default {
   components: {
@@ -23,7 +25,8 @@ export default {
     LineChart,
     PieChart,
     RadarChart,
-    ColorStrip
+    ColorStrip,
+    EpisodePicker
   },
   data() {
     return {
@@ -134,6 +137,8 @@ export default {
     },
     characterRadarData() {
       const characterData = this.characterEmotionTotals;
+      console.log(characterData)
+      console.log('^^^ character data')
       let dataSets = [];
 
       characterData.forEach( (plot, index) => {
