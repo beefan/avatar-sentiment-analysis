@@ -11,7 +11,13 @@ Perform programmatic sentiment analysis of entire *Avatar: The Last Airbender* s
   * **[NRC data](http://sentiment.nrc.ca/lexicons-for-research/)** to associte emotion with every line in every episode. 
 * Part 3:
   * generation of analysis (using charts) for each episode including:
-    * characters speaking in each episode and total words each.
-    * emotional arc of episode
-    * emotional arc of top 3 or 4 speaking characters
-    * emotional arc of "narration" details
+    * emotional arc of episode (vader scores and NRC lexicon lookup)
+    * emotional frequency of episode
+    * emotions of speaking characters
+* Part 4:
+  * Vue.js/Chart.js/Boostrap-vue on the frontend
+    * Custom ColorStrip chart to show emotion line by line using color representation. 
+    * Chart Js Bar chart to show frequency of emotion per episode
+    * Chart Js Line graph to plot Vader scores (positivity/negativity) by line
+    * Chart Js Radar chart to show emotion frequency by top 6 characters
+    * Episode picker with reactiviy in charts to show chosen episode.
