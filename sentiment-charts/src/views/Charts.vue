@@ -148,8 +148,9 @@ export default {
       let dataSets = [];
       if (characterData.length < 1) { return { title: 'NRC Emotion Data', labels: ['missing', 'data'], datasets: [{ label: 'none', data: ['missing', 'data'] }]} }
       characterData.forEach( (plot, index) => {
+          const endName = plot.name.indexOf("NRC")
           dataSets.push(  {
-              label: plot.name.split(" ")[0],
+              label: plot.name.substring(0, endName),
               data: plot.y,
               borderWidth: 1,
               backgroundColor: this.bgColors[5-index],
