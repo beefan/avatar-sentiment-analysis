@@ -85,7 +85,7 @@ export default {
                   to build the charts. What do the charts tell us about trends in the data? Avatar is a cult classic. What
                   do these specific trends tell us about the character and plot composition in show that has capitivated
                   the imagination of the entire world? `,
-    reflection4: `Though I didn't no perform this analysis for Nickolodeon, I wouldn't be surprised if Nickolodeon was
+    reflection4: `Though I didn't perform this analysis for Nickolodeon, I wouldn't be surprised if Nickolodeon was
                   performing similar analysis internally. Not only could it help to identify a "formula" of a successful
                   show, but attributes of a great writer and insight into how such attributes might be promoted.`
     }
